@@ -1,9 +1,8 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.conf import settings
+from django.core.mail import send_mail
 from .models import Commande, CommandePack, AccesPack
-import mailtrap as mt
-import os
 
 class CommandePackInline(admin.TabularInline):
     model = CommandePack
@@ -50,10 +49,9 @@ class CommandeAdmin(admin.ModelAdmin):
     activer_commandes.short_description = "Activer les commandes sélectionnées"
     
     def envoyer_email_confirmation(self, commande):
-        client = mt.MailtrapClient(token=os.getenv('MAILTRAP_API_TOKEN'))
-        
         packs_liste = "\n".join([f"- {cp.pack.nom} : {cp.prix_au_moment_achat} DA" for cp in commande.packs_commandes.all()])
         
+        sujet = f"Votre commande #{commande.id} a été activée - EduVideo"
         message = f"""
 Bonjour {commande.utilisateur.first_name} {commande.utilisateur.last_name},
 
@@ -65,7 +63,7 @@ Nous vous confirmons que votre commande n°{commande.id} a été activée.
 💰 Montant total : {commande.montant_total} DA
 
 Vous pouvez maintenant accéder à vos vidéos en vous connectant à votre espace client :
-🔗 http://127.0.0.1:8000/orders/my-videos/
+🔗 https://eduvideo-render-2.onrender.com/orders/my-videos/
 
 Merci de votre confiance et bon apprentissage !
 
@@ -73,13 +71,13 @@ Cordialement,
 L'équipe EduVideo
 """
         
-        mail = mt.Mail(
-            sender=mt.Address(email="hello@demomailtrap.co", name="EduVideo"),
-            to=[mt.Address(email=commande.utilisateur.email)],
-            subject=f"Votre commande #{commande.id} a été activée - EduVideo",
-            text=message,
+        send_mail(
+            sujet,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [commande.utilisateur.email],
+            fail_silently=False,
         )
-        client.send(mail)
     
     def desactiver_commandes(self, request, queryset):
         for commande in queryset:
