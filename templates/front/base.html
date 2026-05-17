@@ -178,7 +178,7 @@
         <!-- Messages flash (notifications) -->
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} mb-4 {% if message.tags == 'success' %}alert-pulse{% endif %}"></div>    
+                <div class="alert alert-{{ message.tags }} mb-4 {% if message.tags == 'success' %}alert-pulse{% endif %}">
                     <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %} mr-2"></i>
                     {% if 'strong' in message.extra_tags %}
                         <strong>{{ message|safe }}</strong>
