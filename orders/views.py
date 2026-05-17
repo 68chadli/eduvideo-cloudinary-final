@@ -10,6 +10,8 @@ from django.shortcuts import HttpResponse
 from django.utils import timezone
 from dashboard.models import Parametres
 from django.db import models  # Pour les Q objects
+from django.utils.safestring import mark_safe
+
 
 
 import openpyxl
@@ -77,12 +79,14 @@ def add_to_cart(request, pack_id):
     cart.append(pack_id)
     request.session['cart'] = cart
     
-    messages.success(
-        request,
-        f"✅ {pack.nom} a été ajouté à votre panier. <span class='highlight-panier'>Allez dans le menu 🛒 Panier pour finaliser votre commande.</span>",
-        extra_tags='strong panier'
+    message = mark_safe(
+        f"✅ {pack.nom} a été ajouté à votre panier. <span class='highlight-panier'>Allez dans le menu 🛒 Panier pour finaliser votre commande.</span>"
     )
+    
+    messages.success(request, message)
+    
     return redirect('courses:pack_detail', pack_id=pack_id)
+
 
 @login_required
 def cart_view(request):
