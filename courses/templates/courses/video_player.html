@@ -7,12 +7,25 @@
     <h1 class="text-2xl font-bold text-gray-800 mb-4">{{ video.titre }}</h1>
     
     <div class="aspect-video bg-black rounded-lg overflow-hidden">
-        <iframe 
-            src="{{ video.url_hebergement }}" 
-            class="w-full h-full"
-            frameborder="0" 
-            allowfullscreen>
-        </iframe>
+        {% if video.fichier_video %}
+            <!-- Vidéo locale (fichier uploadé) -->
+            <video controls class="w-full h-full" controlsList="nodownload">
+                <source src="{{ video.fichier_video.url }}" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+        {% elif video.url_hebergement %}
+            <!-- Vidéo externe (YouTube/Vimeo) -->
+            <iframe 
+                src="{{ video.url_hebergement }}" 
+                class="w-full h-full"
+                frameborder="0" 
+                allowfullscreen>
+            </iframe>
+        {% else %}
+            <div class="flex items-center justify-center h-full text-white bg-gray-800">
+                <p>Aucune vidéo disponible</p>
+            </div>
+        {% endif %}
     </div>
     
     <div class="mt-4 text-gray-600">

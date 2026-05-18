@@ -99,6 +99,20 @@
             50% { transform: scale(1.01); background-color: #fed7aa; border-left-width: 6px; }
             100% { transform: scale(1); background-color: #ffedd5; }
         }
+        .highlight-panier {
+            display: inline-block;
+            animation: pulsePanier 1s ease-in-out 3;
+            font-weight: bold;
+            background-color: #ffedd5;
+            padding: 4px 8px;
+            border-radius: 12px;
+            color: #b45309;
+        }
+        @keyframes pulsePanier {
+            0% { transform: scale(1); background-color: #ffedd5; }
+            50% { transform: scale(1.02); background-color: #fed7aa; }
+            100% { transform: scale(1); background-color: #ffedd5; }
+        }
     </style>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

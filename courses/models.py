@@ -58,6 +58,7 @@ class Video(models.Model):
     type_video = models.CharField(max_length=20, choices=TYPE_CHOICES, default='cours')
     duree = models.CharField(max_length=20, blank=True)
     url_hebergement = models.URLField()
+    fichier_video = models.FileField(upload_to='videos/', blank=True, null=True)
     description = models.TextField(blank=True)
     ordre = models.IntegerField(default=0)
     enseignant = models.ForeignKey(Enseignant, on_delete=models.SET_NULL, null=True, blank=True, related_name='videos')

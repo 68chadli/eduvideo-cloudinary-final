@@ -22,7 +22,7 @@ class EnseignantAdmin(admin.ModelAdmin):
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ['titre', 'type_video', 'enseignant', 'ordre']
+    list_display = ['titre', 'type_video', 'enseignant', 'ordre','fichier_video']
     list_filter = ['type_video']
 
 class PackVideoInline(admin.TabularInline):
