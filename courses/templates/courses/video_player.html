@@ -10,7 +10,7 @@
         {% if video.fichier_video %}
             <!-- Vidéo locale (fichier uploadé) - lecture via vue protégée -->
             <video controls class="w-full h-full" controlsList="nodownload">
-                <source src="{% url 'courses:video_stream' video.id %}" type="video/mp4">
+                <source src="{{ video.fichier_video.url }}" type="video/mp4">
                 Votre navigateur ne supporte pas la lecture vidéo.
             </video>
         {% elif video.url_hebergement %}
