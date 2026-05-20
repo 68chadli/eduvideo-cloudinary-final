@@ -7,24 +7,14 @@
     <h1 class="text-2xl font-bold text-gray-800 mb-4">{{ video.titre }}</h1>
     
     <div class="aspect-video bg-black rounded-lg overflow-hidden">
-        {% if video.fichier_video %}
-            <!-- Vidéo locale (fichier uploadé) -->
+        {% if video.cloudinary_video %}
             <video controls controlsList="nodownload" class="w-full h-full" oncontextmenu="return false;">
-                <source src="{% url 'courses:video_stream' video.id %}" type="video/mp4">
-                Votre navigateur ne supporte pas la lecture vidéo.
+                <source src="{{ video.cloudinary_video.url }}" type="video/mp4">
             </video>
         {% elif video.url_hebergement %}
-            <!-- Vidéo externe (YouTube/Vimeo) -->
-            <iframe 
-                src="{{ video.url_hebergement }}" 
-                class="w-full h-full"
-                frameborder="0" 
-                allowfullscreen>
-            </iframe>
+            <iframe src="{{ video.url_hebergement }}" ...></iframe>
         {% else %}
-            <div class="flex items-center justify-center h-full text-white bg-gray-800">
-                <p>Aucune vidéo disponible</p>
-            </div>
+            <p>Aucune vidéo disponible</p>
         {% endif %}
     </div>
     
